@@ -1,37 +1,38 @@
 # M Rayhan Ferdous Faisal — Portfolio
 
-A responsive academic portfolio inspired by the card-based interaction style of vCard and the content organization of an academic research portfolio.
+Responsive academic portfolio hosted with GitHub Pages.
 
-## Publish with GitHub Pages
+## Project structure
 
-1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment**, select **Deploy from a branch**.
-3. Select the **main** branch and **/(root)** folder, then save.
-4. GitHub will provide the public URL after deployment.
-
-## Replace photos and videos
-
-Everything is currently self-contained in `index.html`.
-
-- Profile photo: replace the `<div class="portrait">…</div>` block with an image.
-- Project media: replace a `<div class="media">…</div>` block with an image, video or iframe.
-- Links: search for `href="#"` and replace each placeholder.
-- Email: search for `Add your email` and replace both the visible text and `mailto:` value.
-
-Suggested profile image markup:
-
-```html
-<div class="portrait">
-  <img src="assets/profile.jpg" alt="M Rayhan Ferdous Faisal">
-</div>
+```text
+portfolio/
+├── index.html                 # Page content and card markup
+├── assets/
+│   ├── css/
+│   │   └── style.css          # All visual styling and responsive rules
+│   ├── images/
+│   │   └── README.md          # Image filenames and upload instructions
+│   └── js/
+│       ├── resources.js       # Edit image paths, videos, email and profile links here
+│       └── main.js            # Navigation and resource-loading behavior
+└── .github/workflows/
+    └── pages.yml              # Automatic deployment
 ```
 
-Add this CSS:
+## Add photos, videos and links
 
-```css
-.portrait img { width: 100%; height: 100%; object-fit: cover; }
-```
+1. Upload images to `assets/images/`.
+2. Open `assets/js/resources.js`.
+3. Put each image path or URL in its named field.
+4. Add video, LinkedIn, Scholar, project and email values under `links`.
+5. Commit the changes. GitHub Pages deploys automatically.
 
-## Content note
+Empty resource values preserve the styled placeholder, so missing images do not break the layout.
 
-The portfolio describes application-level Samsung Health Monitor work and does not claim development of diagnostic algorithms. The Mars Rover experience is worded as a contribution to autonomous navigation rather than a leadership claim.
+## Content editing
+
+Edit headings, descriptions, dates and card order in `index.html`. Edit colors, spacing and responsive behavior in `assets/css/style.css`.
+
+## Local preview
+
+Open `index.html` in a browser. No package installation or build command is required.
