@@ -6,15 +6,27 @@ Responsive academic portfolio hosted with GitHub Pages.
 
 ```text
 portfolio/
-├── index.html                 # Page content and card markup
+├── index.html                 # Redirects to the About page
+├── about/
+│   └── index.html
+├── resume/
+│   └── index.html
+├── projects/
+│   └── index.html
+├── achievements/
+│   └── index.html
+├── leadership/
+│   └── index.html
+├── contact/
+│   └── index.html
 ├── assets/
 │   ├── css/
-│   │   └── style.css          # All visual styling and responsive rules
+│   │   └── style.css          # Shared design and responsive rules
 │   ├── images/
 │   │   └── README.md          # Image filenames and upload instructions
 │   └── js/
-│       ├── resources.js       # Edit image paths, videos, email and profile links here
-│       └── main.js            # Navigation and resource-loading behavior
+│       ├── resources.js       # Images, videos, email and profile links
+│       └── main.js            # Shared resource and contact behavior
 └── .github/workflows/
     └── pages.yml              # Automatic deployment
 ```
@@ -31,8 +43,8 @@ Empty resource values preserve the styled placeholder, so missing images do not 
 
 ## Content editing
 
-Edit each page section in its matching file under `sections/`. Edit the shared sidebar and navigation in `index.html`. Edit colors, spacing and responsive behavior in `assets/css/style.css`.
+Edit each section in its matching subpage, such as `projects/index.html` or `leadership/index.html`. The sidebar and navigation markup is shared consistently across those pages. Edit colors, spacing and responsive behavior in `assets/css/style.css`.
 
 ## Local preview
 
-Because the sections are loaded as HTML partials, preview through a simple local web server instead of opening `index.html` directly. For example, run `python -m http.server 8000` in the repository and open `http://localhost:8000`. No package installation or build step is required.
+Preview the linked subpages through a simple local web server instead of opening the files directly. For example, run `python -m http.server 8000` in the repository and open `http://localhost:8000`. No package installation or build step is required.
