@@ -55,6 +55,7 @@ function bindContactForm() {
   });
 }
 
+document.querySelector(".panel")?.classList.add("active");
 document.getElementById("year").textContent = new Date().getFullYear();
 applyResources();
 bindContactForm();
