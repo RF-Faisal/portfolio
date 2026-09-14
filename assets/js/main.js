@@ -1,19 +1,91 @@
 const resources = window.PORTFOLIO_RESOURCES || {};
 
+const projectVideoSlots = {
+  projectUvcPurge: "uvcVideo",
+  projectAssistiveRobot: "assistiveRobotVideo",
+  projectPhoenixRover: "phoenixRoverVideo",
+  projectMccAssistant: "mccAssistantVideo",
+  projectRemoteCloner: "remoteClonerVideo"
+};
+
+function assetUrl(src) {
+  return src.startsWith("http")
+    ? src
+    : `../${src.replace(/^\.\//, "")}`;
+}
+
+function youtubeVideoId(value) {
+  if (!value) return "";
+
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      return url.pathname.split("/").filter(Boolean)[0] || "";
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") return url.searchParams.get("v") || "";
+
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (["embed", "shorts", "live"].includes(parts[0])) return parts[1] || "";
+    }
+  } catch {
+    return "";
+  }
+
+  return "";
+}
+
+function renderImage(target, config, videoUrl = "") {
+  const videoId = youtubeVideoId(videoUrl);
+  const src = config?.src
+    ? assetUrl(config.src)
+    : videoId
+      ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+      : "";
+
+  if (!src) {
+    target.replaceChildren();
+    return;
+  }
+
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = config?.alt || "";
+  image.loading = target.dataset.imageSlot === "profile" ? "eager" : "lazy";
+
+  if (videoUrl) {
+    const link = document.createElement("a");
+    link.className = "media-video";
+    link.href = videoUrl;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.setAttribute("aria-label", `Play video: ${config?.alt || "project"}`);
+
+    const play = document.createElement("span");
+    play.className = "media-play";
+    play.setAttribute("aria-hidden", "true");
+    play.textContent = "▶";
+
+    link.append(image, play);
+    target.replaceChildren(link);
+  } else {
+    target.replaceChildren(image);
+  }
+
+  target.classList.add("has-image");
+}
+
 function applyResources(root = document) {
   Object.entries(resources.images || {}).forEach(([slot, config]) => {
     const target = root.querySelector(`[data-image-slot="${slot}"]`);
-    if (!target || !config?.src) return;
+    if (!target) return;
 
-    const image = document.createElement("img");
-    image.src = config.src.startsWith("http")
-      ? config.src
-      : `../${config.src.replace(/^\.\//, "")}`;
-    image.alt = config.alt || "";
-    image.loading = slot === "profile" ? "eager" : "lazy";
-
-    target.replaceChildren(image);
-    target.classList.add("has-image");
+    const videoSlot = projectVideoSlots[slot];
+    const videoUrl = videoSlot ? resources.links?.[videoSlot] || "" : "";
+    renderImage(target, config, videoUrl);
   });
 
   Object.entries(resources.links || {}).forEach(([slot, url]) => {
