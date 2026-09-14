@@ -8,7 +8,7 @@
  */
 window.PORTFOLIO_RESOURCES = {
   images: {
-    profile: { src: "", alt: "Portrait of M Rayhan Ferdous Faisal" },
+    profile: { src: "assets/images/profile.jpg", alt: "Portrait of M Rayhan Ferdous Faisal" },
 
     projectUvcPurge: { src: "", alt: "UVC-PURGE disinfection robot" },
     projectAssistiveRobot: { src: "", alt: "Multi-modal assistive navigation robot" },
@@ -16,10 +16,12 @@ window.PORTFOLIO_RESOURCES = {
     projectMccAssistant: { src: "", alt: "MCC Virtual Assistant interface" },
     projectRemoteCloner: { src: "", alt: "Universal Remote Cloner prototype" },
 
-    achievementBestProgrammer: { src: "", alt: "Best Programmer 2021 recognition" },
-    achievementCodeSamurai: { src: "", alt: "Code Samurai Hackathon finalist recognition" },
-    achievementIcpcDhaka: { src: "", alt: "ICPC Dhaka Regional participation" },
-    achievementIcpcAsiaWest: { src: "", alt: "ICPC Asia West Final participation" }
+    achievementArc22: { src: "assets/images/achievements/arc22.jpg", alt: "ARC 2022 recognition" },
+    achievementBestProgrammer: { src: "assets/images/achievements/bestProgrammerMistTH.png", alt: "Best Programmer 2021 recognition" },
+    achievementCodeSamurai: { src: "assets/images/achievements/code-samurai-2022.jpg", alt: "Code Samurai Hackathon finalist recognition" },
+    achievementIcpcDhaka: { src: "assets/images/achievements/icpc-dhaka.jpg", alt: "ICPC Dhaka Regional participation" },
+    undergradMathOlympiad: { src: "assets/images/achievements/undergrad-math-olympiad.jpg", alt: "Undergraduate Math Olympiad Dhaka North Winner" },
+    achievementIcpcAsiaWest: { src: "assets/images/achievements/icpc-asia-west.jpg", alt: "ICPC Asia West Final participation" }
   },
 
   links: {
@@ -27,9 +29,9 @@ window.PORTFOLIO_RESOURCES = {
     linkedin: "",
     scholar: "",
 
-    uvcVideo: "",
-    assistiveRobotVideo: "",
-    phoenixRoverVideo: "",
+    uvcVideo: "https://youtu.be/hXhjbASMYH0?si=9PXuicURAdQ3q_6E",
+    assistiveRobotVideo: "https://www.youtube.com/watch?v=BgpGymms6A8",
+    phoenixRoverVideo: "https://youtu.be/wBwTMOv7OeM?si=bKyvz3E9eyM8vh3P",
     mccAssistantDetails: "",
     mccAssistantVideo: "",
     remoteClonerDetails: "",
