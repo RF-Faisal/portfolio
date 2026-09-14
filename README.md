@@ -31,8 +31,8 @@ Empty resource values preserve the styled placeholder, so missing images do not 
 
 ## Content editing
 
-Edit headings, descriptions, dates and card order in `index.html`. Edit colors, spacing and responsive behavior in `assets/css/style.css`.
+Edit each page section in its matching file under `sections/`. Edit the shared sidebar and navigation in `index.html`. Edit colors, spacing and responsive behavior in `assets/css/style.css`.
 
 ## Local preview
 
-Open `index.html` in a browser. No package installation or build command is required.
+Because the sections are loaded as HTML partials, preview through a simple local web server instead of opening `index.html` directly. For example, run `python -m http.server 8000` in the repository and open `http://localhost:8000`. No package installation or build step is required.
