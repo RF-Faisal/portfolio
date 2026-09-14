@@ -48,3 +48,6 @@ Edit each section in its matching subpage, such as `projects/index.html` or `lea
 ## Local preview
 
 Preview the linked subpages through a simple local web server instead of opening the files directly. For example, run `python -m http.server 8000` in the repository and open `http://localhost:8000`. No package installation or build step is required.
+
+## Hosted Preview
+https://rf-faisal.github.io/portfolio/
