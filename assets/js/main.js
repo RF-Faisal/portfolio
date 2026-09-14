@@ -1,28 +1,116 @@
 const resources = window.PORTFOLIO_RESOURCES || {};
+const sectionIds = ["about", "resume", "projects", "achievements", "leadership", "contact"];
+const buttons = [...document.querySelectorAll("[data-panel]")];
+const panelRoot = document.getElementById("panel-root");
 
-function applyImage(slot, config) {
-  const target = document.querySelector(`[data-image-slot="${slot}"]`);
-  if (!target || !config?.src) return;
-  const image = document.createElement("img");
-  image.src = config.src;
-  image.alt = config.alt || "";
-  image.loading = slot === "profile" ? "eager" : "lazy";
-  target.replaceChildren(image);
-  target.classList.add("has-image");
+function applyResources(root = document) {
+  Object.entries(resources.images || {}).forEach(([slot, config]) => {
+    const target = root.querySelector(`[data-image-slot="${slot}"]`);
+    if (!target || !config?.src) return;
+
+    const image = document.createElement("img");
+    image.src = config.src;
+    image.alt = config.alt || "";
+    image.loading = slot === "profile" ? "eager" : "lazy";
+    target.replaceChildren(image);
+    target.classList.add("has-image");
+  });
+
+  Object.entries(resources.links || {}).forEach(([slot, url]) => {
+    if (!url) return;
+
+    const href = slot === "email" ? `mailto:${url}` : url;
+    root.querySelectorAll(`[data-link-slot="${slot}"]`).forEach((link) => {
+      link.href = href;
+
+      if (/^https?:/.test(url)) {
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      }
+    });
+  });
 }
 
-Object.entries(resources.images || {}).forEach(([slot, config]) => applyImage(slot, config));
+function bindContactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
 
-Object.entries(resources.links || {}).forEach(([slot, url]) => {
-  if (!url) return;
-  const href = slot === "email" ? `mailto:${url}` : url;
-  document.querySelectorAll(`[data-link-slot="${slot}"]`).forEach(link => {
-    link.href = href;
-    if (/^https?:/.test(url)) {
-      link.target = "_blank";
-      link.rel = "noreferrer";
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const contactEmail = resources.links?.email || "";
+    if (!contactEmail) {
+      alert("Add your verified email address in assets/js/resources.js first.");
+      return;
     }
+
+    const name = document.getElementById("contact-name").value;
+    const email = document.getElementById("contact-email").value;
+    const message = document.getElementById("contact-message").value;
+    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const body = encodeURIComponent(`${message}\n\nReply to: ${email}`);
+
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
   });
+}
+
+function updateNavigation(id) {
+  buttons.forEach((button) => {
+    const selected = button.dataset.panel === id;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-selected", String(selected));
+  });
+}
+
+async function openPanel(requestedId, updateHash = true) {
+  const id = sectionIds.includes(requestedId) ? requestedId : "about";
+  updateNavigation(id);
+
+  panelRoot.innerHTML =
+    '<div class="panel active"><p class="lead">Loading section…</p></div>';
+
+  try {
+    const response = await fetch(`sections/${id}.html`);
+    if (!response.ok) throw new Error(`Unable to load ${id}`);
+
+    panelRoot.innerHTML = await response.text();
+    panelRoot.querySelector(".panel")?.classList.add("active");
+    applyResources(panelRoot);
+    bindContactForm();
+
+    if (updateHash) {
+      history.replaceState(null, "", `#${id}`);
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (error) {
+    panelRoot.innerHTML =
+      '<section class="panel active"><h2 class="title">Section unavailable</h2><p class="lead">Please refresh the page and try again.</p></section>';
+    console.error(error);
+  }
+}
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => openPanel(button.dataset.panel));
 });
 
-const bs=[...document.querySelectorAll("[data-panel]")],ps=[...document.querySelectorAll(".panel")];function openPanel(id,hash=true){id=document.getElementById(id)?id:"about";bs.forEach(b=>{let on=b.dataset.panel===id;b.classList.toggle("active",on);b.setAttribute("aria-selected",on)});ps.forEach(p=>p.classList.toggle("active",p.id===id));if(hash)history.replaceState(null,"","#"+id);scrollTo({top:0,behavior:"smooth"})}bs.forEach(b=>b.onclick=()=>openPanel(b.dataset.panel));document.addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight"].includes(e.key))return;let i=bs.findIndex(b=>b.classList.contains("active")),n=e.key==="ArrowRight"?(i+1)%bs.length:(i-1+bs.length)%bs.length;bs[n].focus();openPanel(bs[n].dataset.panel)});document.getElementById("year").textContent=new Date().getFullYear();const CONTACT_EMAIL=resources.links?.email || "";document.getElementById("contact-form").addEventListener("submit",e=>{e.preventDefault();if(!CONTACT_EMAIL){alert("Add your verified email address to CONTACT_EMAIL in index.html first.");return}const n=document.getElementById("contact-name").value,m=document.getElementById("contact-message").value,from=document.getElementById("contact-email").value;location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Portfolio enquiry from "+n)}&body=${encodeURIComponent(m+"\n\nReply to: "+from)}`});openPanel(location.hash.slice(1)||"about",false);
+document.addEventListener("keydown", (event) => {
+  if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+
+  const current = buttons.findIndex((button) =>
+    button.classList.contains("active")
+  );
+  const offset = event.key === "ArrowRight" ? 1 : -1;
+  const next = (current + offset + buttons.length) % buttons.length;
+
+  buttons[next].focus();
+  openPanel(buttons[next].dataset.panel);
+});
+
+window.addEventListener("hashchange", () => {
+  openPanel(location.hash.slice(1), false);
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+applyResources(document);
+openPanel(location.hash.slice(1) || "about", false);
