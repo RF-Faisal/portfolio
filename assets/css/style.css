@@ -904,3 +904,24 @@ h1 {
   box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
   font-size: 1.1rem;
 }
+
+.contact .icon {
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+/* Contact cards: restore grid centering for FA brand icons (overrides .contact-card span display:block) */
+.contact-card .icon {
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--a);
+}
+
+/* Font Awesome icons inside research-direction cards */
+.research-directions .box .icon i {
+  font-size: 1.15rem;
+  line-height: 1;
+}

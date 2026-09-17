@@ -25,9 +25,10 @@ window.PORTFOLIO_RESOURCES = {
   },
 
   links: {
-    email: "",
-    linkedin: "",
-    scholar: "",
+    email: "ferdous.faisal07@gmail.com",
+    github: "https://github.com/RF-Faisal",
+    linkedin: "https://www.linkedin.com/in/rf-faisal/",
+    scholar: "https://scholar.google.com/citations?user=rqjQN6wAAAAJ&hl=en&oi=ao",
 
     uvcVideo: "https://youtu.be/hXhjbASMYH0?si=9PXuicURAdQ3q_6E",
     assistiveRobotVideo: "https://www.youtube.com/watch?v=BgpGymms6A8",
