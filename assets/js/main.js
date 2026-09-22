@@ -142,6 +142,21 @@ function loadVisitorAnalytics() {
   document.head.append(script);
 }
 
+function currentWeekStart() {
+  const today = new Date();
+  const daysSinceMonday = today.getDay() === 0 ? 6 : today.getDay() - 1;
+  const monday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - daysSinceMonday
+  );
+
+  const year = monday.getFullYear();
+  const month = String(monday.getMonth() + 1).padStart(2, "0");
+  const day = String(monday.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 async function renderWeeklyVisitorCount() {
   const footer = document.querySelector(".foot");
   if (!footer) return;
@@ -152,8 +167,9 @@ async function renderWeeklyVisitorCount() {
 
   try {
     const path = encodeURIComponent(goatCounterPath);
+    const weekStart = currentWeekStart();
     const response = await fetch(
-      `${goatCounterSite}/counter/${path}.json?start=week`
+      `${goatCounterSite}/counter/${path}.json?start=${weekStart}`
     );
 
     const data = await response.json();
