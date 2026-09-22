@@ -925,3 +925,10 @@ h1 {
   font-size: 1.15rem;
   line-height: 1;
 }
+
+
+.visitor-counter::before {
+  content:"\00b7";
+  margin:0 8px;
+  color:#555c67
+}

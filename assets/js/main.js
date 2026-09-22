@@ -127,7 +127,50 @@ function bindContactForm() {
   });
 }
 
+const goatCounterSite = "https://rf-faisal.goatcounter.com";
+const goatCounterPath = "/portfolio";
+
+function loadVisitorAnalytics() {
+  const script = document.createElement("script");
+  script.src = "https://gc.zgo.at/count.js";
+  script.async = true;
+  script.dataset.goatcounter = `${goatCounterSite}/count`;
+  script.dataset.goatcounterSettings = JSON.stringify({
+    path: goatCounterPath,
+    title: "M Rayhan Ferdous Faisal | Portfolio"
+  });
+  document.head.append(script);
+}
+
+async function renderWeeklyVisitorCount() {
+  const footer = document.querySelector(".foot");
+  if (!footer) return;
+
+  const counter = document.createElement("span");
+  counter.className = "visitor-counter";
+  counter.setAttribute("aria-live", "polite");
+
+  try {
+    const path = encodeURIComponent(goatCounterPath);
+    const response = await fetch(
+      `${goatCounterSite}/counter/${path}.json?start=week`
+    );
+
+    const data = await response.json();
+    if ((!response.ok && response.status !== 404) || !data.count) {
+      throw new Error("Visitor counter unavailable");
+    }
+
+    counter.textContent = `Unique visitors this week: ${data.count}`;
+    footer.append(counter);
+  } catch {
+    // Keep the footer clean if GoatCounter is blocked or temporarily unavailable.
+  }
+}
+
 document.querySelector(".panel")?.classList.add("active");
 document.getElementById("year").textContent = new Date().getFullYear();
 applyResources();
 bindContactForm();
+loadVisitorAnalytics();
+renderWeeklyVisitorCount();
