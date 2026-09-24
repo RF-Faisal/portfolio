@@ -177,7 +177,7 @@ async function renderWeeklyVisitorCount() {
       throw new Error("Visitor counter unavailable");
     }
 
-    counter.textContent = `Unique visitors this week: ${data.count}`;
+    counter.textContent = `Weekly visitors: ${data.count}`;
     footer.append(counter);
   } catch {
     // Keep the footer clean if GoatCounter is blocked or temporarily unavailable.
