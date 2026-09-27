@@ -21,7 +21,11 @@ window.PORTFOLIO_RESOURCES = {
     achievementCodeSamurai: { src: "assets/images/achievements/code-samurai-2022.jpg", alt: "Code Samurai Hackathon finalist recognition" },
     achievementIcpcDhaka: { src: "assets/images/achievements/icpc-dhaka.jpg", alt: "ICPC Dhaka Regional participation" },
     undergradMathOlympiad: { src: "assets/images/achievements/undergrad-math-olympiad.jpg", alt: "Undergraduate Math Olympiad Dhaka North Winner" },
-    achievementIcpcAsiaWest: { src: "assets/images/achievements/icpc-asia-west.jpg", alt: "ICPC Asia West Final participation" }
+    achievementIcpcAsiaWest: { src: "assets/images/achievements/icpc-asia-west.jpg", alt: "ICPC Asia West Final participation" },
+    SamsungBestEngineer: { src: "assets/images/achievements/samsung-best-engineer.jpg", alt: "Samsung Best Engineer recognition" },
+    achievementBdmoHighSchool: { src: "assets/images/achievements/bdmo-high-school.jpg", alt: "BdMO High School Champion" },
+    achievementShaheenBestStudent: { src: "assets/images/achievements/shaheen-best-student.jpg", alt: "Shaheen Best Student recognition" },
+    achievementInterShaheen: { src: "assets/images/achievements/inter-shaheen.jpg", alt: "Inter-Shaheen Math Olympiad" }
   },
 
   links: {

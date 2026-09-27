@@ -119,7 +119,7 @@ function bindContactForm() {
     const name = document.getElementById("contact-name").value;
     const email = document.getElementById("contact-email").value;
     const message = document.getElementById("contact-message").value;
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const subject = encodeURIComponent(`M Rayhan - Portfolio enquiry from ${name}`);
     const body = encodeURIComponent(`${message}\n\nReply to: ${email}`);
 
     window.location.href =
